@@ -6,26 +6,16 @@ namespace ToDoList.Controllers
 {
 
 
-  public class HomeController : Controller
-  {
-    [HttpGet("/")]
-    public ActionResult Index()
+    public class HomeController : Controller
     {
-      List<Item> allItems = Item.GetAll();
-      return View(allItems);
+
+        [HttpGet("/")]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
     }
-    [HttpGet("/items/new")]
-    public ActionResult CreateForm()
-    {
-      return View();
-    }
-    [HttpPost("/items")]
-    public ActionResult Create(string description)
-    {
-      Item myItem = new Item(description);
-      return RedirectToAction("Index");
-    }
-  }
 }
 
 
