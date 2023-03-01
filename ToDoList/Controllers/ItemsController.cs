@@ -20,9 +20,9 @@ namespace ToDoList.Controllers
     }
 
     [HttpPost("/items")]
-    public ActionResult Create(string description)
+    public ActionResult Create(string description, string details)
     {
-      Item myItem = new Item(description);
+      Item myItem = new Item(description, details);
       return RedirectToAction("Index");
     }
 

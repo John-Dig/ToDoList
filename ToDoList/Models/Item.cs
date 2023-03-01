@@ -5,12 +5,14 @@ namespace ToDoList.Models
   public class Item
   {
     public string Description { get; set; }
+    public string Details {get; set;}
     public int Id { get; }
     private static List<Item> _instances = new List<Item> { };
 
-    public Item(string description)
+    public Item(string description, string details)
     {
       Description = description;
+      Details = details;
       _instances.Add(this);
       Id = _instances.Count;
     }
