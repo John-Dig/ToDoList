@@ -12,6 +12,7 @@ namespace ToDoList.Models
     {
       Description = description;
       _instances.Add(this);
+      Id = _instances.Count;
     }
 
     public static List<Item> GetAll()
