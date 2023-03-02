@@ -19,25 +19,27 @@ namespace ToDoList.Controllers
       return View();
     }
 
-    [HttpPost("/items")]
-    public ActionResult Create(string description, string details)
-    {
-      Item myItem = new Item(description, details);
-      return RedirectToAction("Index");
-    }
+    // [HttpPost("/items")]
+    // public ActionResult Create(string description, string details)
+    // {
+    //   Item myItem = new Item(description, details);
+    //   return RedirectToAction("Index");
+    // }
 
-    [HttpPost("/items/delete")]
-    public ActionResult DeleteAll()
-    {
-      Item.ClearAll();
-      return View();
-    }
+    // [HttpPost("/items/delete")]
+    // public ActionResult DeleteAll()
+    // {
+    //   Item.ClearAll();
+    //   return View();
+    // }
 
-    [HttpGet("/items/{id}")]
-    public ActionResult Show(int id)
-    {
-      Item foundItem = Item.Find(id);
-      return View(foundItem);
-    }
+   
+  
+  [HttpGet("/categories/{categoryId}/items/new")]
+  public ActionResult New(int categoryId)
+  {
+     Category category = Category.Find(categoryId);
+     return View(category);
+  }
   }
 }
