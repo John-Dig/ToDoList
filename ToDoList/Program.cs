@@ -14,7 +14,7 @@ namespace ToDoList
       WebApplication app = builder.Build(); //this creates and returns our web app host, which we save in the variable app. As we can see, app is of the type WebApplication
       
       app.UseHttpsRedirection();
-      
+      app.UseStaticFiles(); //added to use files in wwwroot. This needs to be BEFORE app.Run(); 
       app.UseRouting(); //this specifies that we want our host to match the website URL to routes that we create within our app. For example, if the URL is localhost:5000/Home/Index, our host will know to match _Home/Index to a route that we coded in our project. This will make more sense once we start defining routes in controller files
 
       app.MapControllerRoute(
