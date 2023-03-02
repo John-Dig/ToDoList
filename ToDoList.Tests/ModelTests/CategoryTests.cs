@@ -82,7 +82,7 @@ namespace ToDoList.Tests
   {
     //Arrange
     string description = "Walk the dog.";
-    Item newItem = new Item(description, "this is the details");
+    Item newItem = new Item(description);
     List<Item> newList = new List<Item> { newItem };
     string name = "Work";
     Category newCategory = new Category(name);
