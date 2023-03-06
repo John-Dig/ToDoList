@@ -7,6 +7,10 @@ namespace ToDoList.Models
     public string Description { get; set; }
     public int Id { get; }
 
+    public Item(string description) //added this back in as an overload, like I was supposed to before.
+    {
+      Description = description;
+    }
     public Item(string description, int id) //id wasn't added in lesson?
     {
       Description = description;
@@ -56,7 +60,7 @@ namespace ToDoList.Models
     public static Item Find(int searchId)
     {
       // Temporarily returning placeholder item to get beyond compiler errors until we refactor to work with database.
-      Item placeholderItem = new Item("placeholder item");
+      Item placeholderItem = new Item("placeholder item", 1);
       return placeholderItem;
     }
   }
