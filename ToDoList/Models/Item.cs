@@ -29,11 +29,14 @@ namespace ToDoList.Models
         bool descriptionEquality = (this.Description == newItem.Description);
         return descriptionEquality;
       }
-    }
 
+    }
     public override int GetHashCode() //overrides hash code 
     {
       return Id.GetHashCode();
+    }
+    public void Save()
+    {
     }
     public static List<Item> GetAll()
     {

@@ -10,7 +10,7 @@ namespace ToDoList.Tests
   public class ItemTests : IDisposable
   {
 
-    public IConfiguration Configuration {get; set;} //new for sql. Contains all of the data in appsettings.json
+    public IConfiguration Configuration { get; set; } //new for sql. Contains all of the data in appsettings.json
     public void Dispose()
     {
       Item.ClearAll();
@@ -115,6 +115,20 @@ namespace ToDoList.Tests
 
       // Assert
       Assert.AreEqual(firstItem, secondItem);
+    }
+    [TestMethod]
+    public void Save_SavesToDatabase_ItemList()
+    {
+      //Arrange
+      Item testItem = new Item("Mow the lawn");
+
+      //Act
+      testItem.Save();
+      List<Item> result = Item.GetAll();
+      List<Item> testList = new List<Item> { testItem };
+
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
     }
 
 
