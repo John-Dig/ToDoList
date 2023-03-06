@@ -97,19 +97,6 @@ namespace ToDoList.Tests
       Assert.AreEqual(newItem2, result);
     }
 
-    [TestMethod]
-    public void GetDetails_ReturnsDetails_String()
-    {
-      //Arrange
-      string description = "test";
-
-      //Act
-      Item newDetails = new Item(description);
-      string result = newDetails.Details;
-
-      //Assert
-      Assert.AreEqual(newDetails.Details, result);
-    }
 
 
   }
