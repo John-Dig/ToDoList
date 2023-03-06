@@ -31,6 +31,10 @@ namespace ToDoList.Models
       }
     }
 
+    public override int GetHashCode() //overrides hash code 
+    {
+      return Id.GetHashCode();
+    }
     public static List<Item> GetAll()
     {
       List<Item> allItems = new List<Item> { };
