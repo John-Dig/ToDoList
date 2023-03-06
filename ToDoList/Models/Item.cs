@@ -17,6 +17,20 @@ namespace ToDoList.Models
       Id = Id; //id wasn't added in lesson?
     }
 
+    public override bool Equals(System.Object otherItem) //overrides built in method that belongs to all objects created via CLASS declaration.
+    {
+      if (!(otherItem is Item))
+      {
+        return false;
+      }
+      else
+      {
+        Item newItem = (Item)otherItem;
+        bool descriptionEquality = (this.Description == newItem.Description);
+        return descriptionEquality;
+      }
+    }
+
     public static List<Item> GetAll()
     {
       List<Item> allItems = new List<Item> { };
