@@ -46,8 +46,14 @@ namespace ToDoList.Models
       conn.Open(); //Each time we make a query, we need to open a new database connection
 
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand; //Once our connection is open, we can construct our SQL query
-      cmd.CommandText = "SELECT * FROM items;"; //Next, we'll add the actual text of our SQL command
-
+      //cmd.CommandText = "SELECT * FROM items;"; //<-- old command 
+      cmd.CommandText = "INSERT INTO items (description) VALUES (@ItemDescription);"; //new command
+      MySqlParameter param = new MySqlParameter();
+      param.ParameterName = "@ItemDescription";
+      param.Value = this.Description;
+      cmd.Parameters.Add(param);
+      cmd.ExecuteNonQuery();
+      // Id = cmd.LastInsertedId;
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader; //Next, we need to create a Data Reader Object. It will be responsible for reading the data returned by our database in response to the "SELECT * FROM items;" command
       while (rdr.Read()) //A MySqlDataReader object has a built-in Read() method that reads results from the database one at a time and then advances to the next record. This method returns a boolean. If the method advances to the next object in the database, it returns true. If it reaches the end of the records that our query has returned, it returns false and our while loop ends
       {
