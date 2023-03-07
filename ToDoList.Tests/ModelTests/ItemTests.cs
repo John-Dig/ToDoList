@@ -6,30 +6,25 @@ using System;
 
 namespace ToDoList.Tests
 {
+
   [TestClass]
   public class ItemTests : IDisposable
   {
 
-    public IConfiguration Configuration { get; set; } //new for sql. Contains all of the data in appsettings.json
+    public IConfiguration Configuration { get; set; }
+
     public void Dispose()
     {
       Item.ClearAll();
     }
-
-    public ItemTests() //new for sql
+    
+    public ItemTests()
     {
       IConfigurationBuilder builder = new ConfigurationBuilder()
           .AddJsonFile("appsettings.json");
       Configuration = builder.Build();
-      DBConfiguration.ConnectionString = Configuration["ConnectionStrings:TestConnection"]; //We set DBConfiguration.ConnectionString to the "TestConnection" database connection string, which we access through the Configuration object. This overrides the DBConfiguration.ConnectionString we set in DatabaseConfig.cs, ensuring that our tests are connected to our test database, not our development database
+      DBConfiguration.ConnectionString = Configuration["ConnectionStrings:TestConnection"];
     }
-    // [TestMethod]
-    // public void ItemConstructor_CreatesInstanceOfItem_Item()
-    // {
-    //   Item newItem = new Item("test");
-    //   Assert.AreEqual(typeof(Item), newItem.GetType());
-    // }
-
     // [TestMethod]
     // public void GetDescription_ReturnsDescription_String()
     // {
