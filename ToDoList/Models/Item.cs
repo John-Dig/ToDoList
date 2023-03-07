@@ -5,16 +5,16 @@ namespace ToDoList.Models
   public class Item
   {
     public string Description { get; set; }
-    public int Id { get; }
+    public int Id { get; set; }
 
     public Item(string description) //added this back in as an overload, like I was supposed to before.
     {
       Description = description;
     }
-    public Item(string description, int id) //id wasn't added in lesson?
+    public Item(string description, int id)
     {
       Description = description;
-      Id = Id; //id wasn't added in lesson?
+      Id = id;
     }
 
     public override bool Equals(System.Object otherItem) //overrides built in method that belongs to all objects created via CLASS declaration.
@@ -26,18 +26,74 @@ namespace ToDoList.Models
       else
       {
         Item newItem = (Item)otherItem;
+        bool idEquality = (this.Id == newItem.Id);
         bool descriptionEquality = (this.Description == newItem.Description);
-        return descriptionEquality;
+        return (idEquality && descriptionEquality);
       }
-
     }
+
     public override int GetHashCode() //overrides hash code 
     {
       return Id.GetHashCode();
     }
     public void Save()
     {
+      MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
+      conn.Open();
+
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+
+      // Begin new code Lesson 13
+
+      cmd.CommandText = "INSERT INTO items (description) VALUES (@ItemDescription);";
+      MySqlParameter param = new MySqlParameter();
+      param.ParameterName = "@ItemDescription";
+      param.Value = this.Description; //auto implemented "Description" property of the Item we're saving.
+      cmd.Parameters.Add(param);
+      cmd.ExecuteNonQuery();
+      Id = (int)cmd.LastInsertedId; //explicit type conversion
+
+      // End new code //jd: the short version of above! : cmd.Parameters.AddWithValue("@ItemDescription", this.Description);
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
+
+    public static Item Find(int id)
+    {
+      MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
+      conn.Open();
+
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = "SELECT * FROM `items` WHERE id = @ThisId;";
+
+      MySqlParameter param = new MySqlParameter();
+      param.ParameterName = "@ThisId";
+      param.Value = id;
+
+      cmd.Parameters.Add(param);
+
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int itemId = 0;
+      string itemDescription = "";
+      while (rdr.Read())
+      {
+        itemId = rdr.GetInt32(0);
+        itemDescription = rdr.GetString(1);
+      }
+      Item foundItem = new Item(itemDescription, itemId);
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return foundItem;
+    }
+
     public static List<Item> GetAll()
     {
       List<Item> allItems = new List<Item> { };
@@ -84,11 +140,6 @@ namespace ToDoList.Models
       }
     }
 
-    public static Item Find(int searchId)
-    {
-      // Temporarily returning placeholder item to get beyond compiler errors until we refactor to work with database.
-      Item placeholderItem = new Item("placeholder item", 1);
-      return placeholderItem;
-    }
+
   }
 }
